@@ -121,7 +121,15 @@ int max_coverage(char table_ranks[], int cards_on_table, int value, int indices[
  * Assume that the input is valid.
  */
 void deal_cards() {
-	//SIGMA
+	int p = 0;
+    int k = 0;
+    while( scanf("%c%c",suit[p][k],rank[p][k]) ) {
+        ++p;
+        if (p > 3) {
+            p = 0;
+            ++k;
+        }else continue;
+    }
 }
 
 /* Return the index of the card that should be played this turn (within the cards held by the current player).
