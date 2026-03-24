@@ -121,7 +121,7 @@ int max_coverage(char table_ranks[], int cards_on_table, int value, int indices[
  * Assume that the input is valid.
  */
 void deal_cards() {
-	/* [FILL HERE] */
+	//SIGMA
 }
 
 /* Return the index of the card that should be played this turn (within the cards held by the current player).
