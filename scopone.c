@@ -123,14 +123,36 @@ int max_coverage(char table_ranks[], int cards_on_table, int value, int indices[
 void deal_cards() {
 	int p = 0;
     int k = 0;
-    while( scanf("%c%c",suit[p][k],rank[p][k]) ) {
-        ++p;
+    char temp = ' ';
+    while (1) {
+        scanf(" %c",&temp);
+        if (temp == 'E') break;
+        suit[p][k] = temp;
+        scanf(" %c",&temp);
+        if (temp == 'E') break;
+        rank[p][k] = temp;
+        p++;
         if (p > 3) {
             p = 0;
-            ++k;
-        }else continue;
+            k++;
+
+
+        }
     }
-}
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 /* Return the index of the card that should be played this turn (within the cards held by the current player).
  * - table_suits: the suits of the cards on the table

@@ -9,7 +9,7 @@
 #define TEAMS 2
 
 /* MACRO FOR DEBUGGING PURPOSES */
-//#define DEBUG // uncomment to show debugging information
+#define DEBUG // uncomment to show debugging information
 #ifdef DEBUG
     #define debug(...) printf(__VA_ARGS__)
 #else
