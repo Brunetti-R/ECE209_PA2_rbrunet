@@ -55,7 +55,7 @@ int main(void) {
          *
          * - Print the outcome of each turn: card played, cards won, cards remaining on the table (see format in project specifications).
          */
-    	printf("turn %d:: player: %d, played: %c%c, cards won: [ ] table: [ ]",player, suit[player][playCard], rank[player][playCard]);
+    	printf("turn %d:: player: %d, played: %c%c, cards won: [ ] table: [ ]",turn,player, suit[player][playCard], rank[player][playCard]);
 	    /* [FILL HERE] */
 
     } // end loop
