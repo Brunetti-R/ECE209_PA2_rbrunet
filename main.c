@@ -24,10 +24,13 @@ void print_card_distribution() {
 
 /* Main: execution and score computation */
 int main(void) {
-
     /* [FILL HERE (required local variables)] */
     int num_turns = 0;
-
+    char table_suits[DECK_SIZE] = {0};
+    char table_ranks[DECK_SIZE] = {0};
+    int cards_on_table = {0};
+    int player = 0;
+    int playCard;
     /* Print prompt for user input */
     printf("Enter the number of turns and the cards in the deck (terminated by 'E'):\n");
 
@@ -44,14 +47,15 @@ int main(void) {
     for (int turn = 0; turn < num_turns; turn++) {
 
         /* Select the card to be played */
-
+        playCard = select_card(table_suits, table_ranks, cards_on_table, player);
     	/* [FILL HERE] */
 
         /* - Update the list of cards on the table and in hand.
          * - Keep track of the cards won by each team and the number of scopas (sweeps) made.
+         *
          * - Print the outcome of each turn: card played, cards won, cards remaining on the table (see format in project specifications).
          */
-    	
+    	printf("player[%d] played: %c%c\n",player, suit[player][playCard], rank[player][playCard]);
 	    /* [FILL HERE] */
 
     } // end loop

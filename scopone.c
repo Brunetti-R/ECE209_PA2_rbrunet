@@ -116,14 +116,16 @@ int max_coverage(char table_ranks[], int cards_on_table, int value, int indices[
 /**********************************************************/
 /*         CORE FUNCTIONS TO PROVIDE                    */
 /**********************************************************/
-char prMinSearch(int player, char array[]) {
+int prMinSearch(int player, char array[]) {
     //local Variables
     char min = 100;
     char lastSuit = '\0';
+    int index = 0;
     //for each array element up to number of player cards
     for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
         if (array[i] < 10) continue;  // Excludes already played cards from calculation
         if (array[i] <= min ) {
+
             // handles case that 2 cards hold min value
             // picks first card that is not a diamond
             if (array[i] == min) {
@@ -132,13 +134,15 @@ char prMinSearch(int player, char array[]) {
                 }
                 else if(suit[player][i] == 'D') continue;
             }
+            // normal case
             min = array[i];
             lastSuit = suit[player][i];
+            index = i;
         }
     }
 
-    return min;
-}
+    return index;
+}   //retuns index of minimum primera value card Takes primera values array
 
 
 
@@ -172,26 +176,22 @@ void deal_cards() {
  * - player: the player for this turn
  */
 int select_card(char table_suits[], char table_ranks[], int cards_on_table, int player) {
-    char hand[PLAYERS][CARDS_PER_PLAYER] = {0};
-    char primVal[CARDS_PER_PLAYER];
-
+    char rankVal[PLAYERS][CARDS_PER_PLAYER] = {0};     //temp var used to hold decoded value of ranks
+    char primVal[CARDS_PER_PLAYER];                     //temp var to hold primera values of players hand
+    int  cardPlay;                                      //the index of the card the player must play
     for (int i = 0; i < 10; ++i) {
-        hand[player][i] = get_value(rank[player][i]);
+        rankVal[player][i] = get_value(rank[player][i]);
         primVal[i] = get_primiera_value(rank[player][i]);
-    }
-
-    for (int i = 0; hand[player][i] != 0; ++i) {
-        if (cards_on_table == 0) {
-        int x = 1; // fixme
-        }
-    }
-
-
-
+    }   //for loop loads primVals and rankVals from current players rank
 
     /* If there are no cards on the table, play the card with the minimum value (in terms of primiera).
-     * If there are multiple cards with this value, select the first one found that is not a diamond.
-     */
+      * If there are multiple cards with this value, select the first one found that is not a diamond.
+      */
+   ///////////////////////////////////////////////////////////////////////////////////
+    if (cards_on_table == 0) {
+        cardPlay = prMinSearch(player,primVal);
+    }
+    /////////////////////////////////////////////////////////////////////////////////
 
     /* [FILL HERE] */
 
@@ -237,5 +237,5 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
     /* [FILL HERE] */
 
    
-    return -1; // change the return value
+    return cardPlay; // change the return value
 }
