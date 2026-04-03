@@ -28,10 +28,10 @@ int main(void) {
     int num_turns = 0;
     char table_suits[DECK_SIZE] = {0};
     char table_ranks[DECK_SIZE] = {0};
-
+    int capture = 0;   // indicator value returned by capture function
     int player = 0;
     int playCard;
-
+    int cards_on_table = 0;
     /* Print prompt for user input */
     printf("Enter the number of turns and the cards in the deck (terminated by 'E'):\n");
 
@@ -61,12 +61,23 @@ int main(void) {
 
     /* Game play for the specified number of turns (num_turns). */
     for (int turn = 0; turn < num_turns; turn++) {
-        int cards_on_table = 0;
-        for (int i = 0; i < DECK_SIZE;++i) {
-            if (table_suits[i] != 0) cards_on_table++;                          //counts cards on table
-        }
+
         /* Select the card to be played */
         playCard = select_card(table_suits, table_ranks, cards_on_table, player);
+        if (capture == 0) {                                      //place card on table if no capture
+            for (int i = 0; i < DECK_SIZE; ++i) {
+               if (table_ranks[i] == 0) {
+                   table_suits[i] = suit[player][playCard];
+                   table_ranks[i] = rank[player][playCard];
+                   break;
+               } else continue;
+            }
+        }
+        cards_on_table = 0;
+        for (int i = 0; i < DECK_SIZE;++i) {
+
+            if (table_suits[i] != 0) cards_on_table++;                          //counts cards on table
+        }
     	/* [FILL HERE] */
 
         /* - Update the list of cards on the table and in hand.
@@ -86,7 +97,8 @@ int main(void) {
         printf(" ]\n");
 
         /* [FILL HERE] */
-
+        ++player;
+        if (player > 3) player = 0;
     } // end loop
 
     /* If all 40 turns have been played and there are cards left on the table, assign them
