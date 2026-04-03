@@ -122,7 +122,7 @@ int main(void) {
 
 
         }
-    printf(" ]");
+    printf(" ] scores = [cards=0, diamonds=0, settebello=0,primiera=0, scopa=0]\n");
 
         /* [FILL HERE] */
     }
