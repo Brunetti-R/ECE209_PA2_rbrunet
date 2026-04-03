@@ -109,8 +109,23 @@ int main(void) {
 
     /* Compute the scores and print them, along with the winner (see format in project specifications). */
 
-    /* [FILL HERE] */
+    for (int team = 0; team < 2; ++team) {
+        printf("team %d:: cards won: [",team);
+        for (player = 0; player < 4; ++player){
+            if ( (team + player) % 2) continue;
 
+                for (int t = 0; t < num_turns; ++t) {
+                    for (int i = 0; i < strlen(suitsWon[t][player]); ++i) {
+                        printf(" %c%c",suitsWon[t][player][i],ranksWon[t][player][i]);
+                    }
+                }
+
+
+        }
+    printf(" ]");
+
+        /* [FILL HERE] */
+    }
     /* The program always returns successfully. */
     return 0;
 }
