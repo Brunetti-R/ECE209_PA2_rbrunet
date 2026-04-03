@@ -140,7 +140,6 @@ int prMinSearch(int player, char array[]) {
             index = i;
         }
     }
-
     return index;
 }   //retuns index of minimum primera value card Takes primera values array
 

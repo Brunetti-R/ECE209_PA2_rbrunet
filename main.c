@@ -5,7 +5,7 @@
 */
 
 #include "scopone.h"
-
+#include <string.h>
 /* Cards held by the players (see scopone.c) */
 extern char suit[PLAYERS][CARDS_PER_PLAYER];
 extern char rank[PLAYERS][CARDS_PER_PLAYER];
@@ -28,15 +28,31 @@ int main(void) {
     int num_turns = 0;
     char table_suits[DECK_SIZE] = {0};
     char table_ranks[DECK_SIZE] = {0};
-    int cards_on_table = {0};
+
     int player = 0;
     int playCard;
+
     /* Print prompt for user input */
     printf("Enter the number of turns and the cards in the deck (terminated by 'E'):\n");
 
     /* Read the number of turns to be played. */
     scanf("%d ", &num_turns);
-
+    char suitsWon[num_turns][PLAYERS][DECK_SIZE];
+    char ranksWon[num_turns][PLAYERS][DECK_SIZE];
+    for (int i = 0; i < num_turns; i++) {
+        for (int j = 0; j < PLAYERS; j++) {
+            for (int k = 0; k < DECK_SIZE; k++) {
+                suitsWon[i][j][k] = '\0';
+            }
+        }
+    }
+    for (int i = 0; i < num_turns; i++) {
+        for (int j = 0; j < PLAYERS; j++) {
+            for (int k = 0; k < DECK_SIZE; k++) {
+                ranksWon[i][j][k] = '\0';
+            }
+        }
+    }
     /* Distribute the cards to the players (assume that the input is valid). */
     deal_cards();
 
@@ -45,7 +61,10 @@ int main(void) {
 
     /* Game play for the specified number of turns (num_turns). */
     for (int turn = 0; turn < num_turns; turn++) {
-
+        int cards_on_table = 0;
+        for (int i = 0; i < DECK_SIZE;++i) {
+            if (table_suits[i] != 0) cards_on_table++;                          //counts cards on table
+        }
         /* Select the card to be played */
         playCard = select_card(table_suits, table_ranks, cards_on_table, player);
     	/* [FILL HERE] */
@@ -55,8 +74,18 @@ int main(void) {
          *
          * - Print the outcome of each turn: card played, cards won, cards remaining on the table (see format in project specifications).
          */
-    	printf("turn %d:: player: %d, played: %c%c, cards won: [ ] table: [ ]",turn,player, suit[player][playCard], rank[player][playCard]);
-	    /* [FILL HERE] */
+    	printf("turn %d:: player: %d, card played: %c%c, cards won: [", turn, player, suit[player][playCard],
+               rank[player][playCard]);
+        for (int i = 0; i < strlen(suitsWon[turn][player]);++i ) {
+            printf(" %c%c",suitsWon[turn][player][i],ranksWon[turn][player][i]);
+        }
+        printf(" ] table: [");
+        for (int i = 0; i < cards_on_table; ++i) {
+            printf(" %c%c",table_suits[i],table_ranks[i]);
+        }
+        printf(" ]\n");
+
+        /* [FILL HERE] */
 
     } // end loop
 
