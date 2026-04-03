@@ -190,6 +190,7 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
     if (cards_on_table == 0) {
         cardPlay = prMinSearch(player,primVal);
     }
+    else return -1;
     /////////////////////////////////////////////////////////////////////////////////
 
     /* [FILL HERE] */
