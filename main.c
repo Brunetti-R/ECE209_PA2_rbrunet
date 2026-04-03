@@ -122,10 +122,11 @@ if (num_turns != 0) {
 
 
         }
-        printf(" ] scores = [cards=0, diamonds=0, settebello=0, primiera=0, scopa=0]\n");
+        printf(" ] scores = [cards=0, diamonds=0, settebello=0, primiera=0, scopa=0]\n"); //FIXME
 
         /* [FILL HERE] */
     }
+    printf("tie: 0-0"); //FIXME
 }/* The program always returns successfully. */
     return 0;
 }
