@@ -106,7 +106,7 @@ int main(void) {
     */
 
     /* [FILL HERE] */
-
+if (num_turns > 0) {
     /* Compute the scores and print them, along with the winner (see format in project specifications). */
 
     for (int team = 0; team < 2; ++team) {
@@ -114,18 +114,18 @@ int main(void) {
         for (player = 0; player < 4; ++player){
             if ( (team + player) % 2) continue;
 
-                for (int t = 0; t < num_turns; ++t) {
-                    for (int i = 0; i < strlen(suitsWon[t][player]); ++i) {
-                        printf(" %c%c",suitsWon[t][player][i],ranksWon[t][player][i]);
-                    }
+            for (int t = 0; t < num_turns; ++t) {
+                for (int i = 0; i < strlen(suitsWon[t][player]); ++i) {
+                    printf(" %c%c",suitsWon[t][player][i],ranksWon[t][player][i]);
                 }
+            }
 
 
         }
-    printf(" ] scores = [cards=0, diamonds=0, settebello=0,primiera=0, scopa=0]\n");
+        printf(" ] scores = [cards=0, diamonds=0, settebello=0, primiera=0, scopa=0]\n");
 
         /* [FILL HERE] */
     }
-    /* The program always returns successfully. */
+}/* The program always returns successfully. */
     return 0;
 }
