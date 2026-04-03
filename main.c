@@ -106,7 +106,7 @@ int main(void) {
     */
 
     /* [FILL HERE] */
-if (num_turns > 0) {
+if (num_turns != 0) {
     /* Compute the scores and print them, along with the winner (see format in project specifications). */
 
     for (int team = 0; team < 2; ++team) {
