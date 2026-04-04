@@ -65,6 +65,7 @@ int main(void) {
         /* Select the card to be played */
         playCard = select_card(table_suits, table_ranks, cards_on_table, player);
 
+        // log cards won by capture and pull cards off table
         capture = max_coverage(table_ranks, cards_on_table, get_value(rank[player][playCard]),indexs);
         int k;
         if (capture > 0) {
@@ -82,10 +83,30 @@ int main(void) {
             }
         }
 
+        // reload table to fill holes
+        char tempSuit[DECK_SIZE] = {0};
+        char tempRank[DECK_SIZE] = {0};
+        int count = 0;
+        for (int i = 0; i < DECK_SIZE; ++i ) {
+            if (table_ranks[i] != 0) {
+                tempRank[count] = table_ranks[i];
+                tempSuit[count] = table_suits[i];
+                count++;
+            }
+        }
+        for (int i = 0; i < DECK_SIZE; ++i) {
+            table_ranks[i] = 0;
+            table_suits[i] = 0;
+        }
+        for (int i = 0; i < DECK_SIZE; ++i) {
+            table_ranks[i] = tempRank[i];
+            table_suits[i] = tempSuit[i];
+        }
+///////////////////////////// finish reloading table
 
 
-
-        if (capture == 0) {                                      //place card on table if no capture
+        //place card on table if no capture
+        if (capture == 0) {
             for (int i = 0; i < DECK_SIZE; ++i) {
                if (table_ranks[i] == 0) {
                    table_suits[i] = suit[player][playCard];
