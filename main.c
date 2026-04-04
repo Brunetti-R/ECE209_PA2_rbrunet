@@ -9,7 +9,7 @@
 /* Cards held by the players (see scopone.c) */
 extern char suit[PLAYERS][CARDS_PER_PLAYER];
 extern char rank[PLAYERS][CARDS_PER_PLAYER];
-
+extern int indexs[DECK_SIZE];
 /* Print the cards held by each player. */
 void print_card_distribution() {
     for (int i = 0; i < PLAYERS; i++) {

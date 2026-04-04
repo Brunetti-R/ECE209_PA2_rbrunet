@@ -7,7 +7,7 @@
  */
 char suit[PLAYERS][CARDS_PER_PLAYER];
 char rank[PLAYERS][CARDS_PER_PLAYER];
-extern int indixs[DECK_SIZE] = {0};
+
 /**********************************************************/
 /*         HELPER FUNCTIONS                               */
 /**********************************************************/
@@ -175,6 +175,7 @@ void deal_cards() {
  * - player: the player for this turn
  */
 int select_card(char table_suits[], char table_ranks[], int cards_on_table, int player) {
+    int indexs[DECK_SIZE] = {0};
     char rankVal[PLAYERS][CARDS_PER_PLAYER] = {0};     //temp var used to hold decoded value of ranks
     char primVal[CARDS_PER_PLAYER];                     //temp var to hold primera values of players hand
     int  cardPlay = -1;                                      //the index of the card the player must play
@@ -186,7 +187,7 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
     /* If there are no cards on the table, play the card with the minimum value (in terms of primiera).
       * If there are multiple cards with this value, select the first one found that is not a diamond.
       */
-   // count cards in hand
+    // count cards in hand
     int cardsinhand = 0;
     for (int i = 0; i < CARDS_PER_PLAYER; i++) {
         if (suit[player][i] != 0) cardsinhand++;
@@ -206,7 +207,7 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
 
 
     /* If the player has only one card in hand, play it. */
-///////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
     if (cardsinhand == 1) {
         for (int i = 0; i < CARDS_PER_PLAYER; i++) {
             if (suit[player][i] != 0) {
@@ -215,28 +216,39 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
             }
         }
     }
-///////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
 
 
     /* If the player has the settebello in hand and can make a capture, play it. */
-
-    if (max_coverage(table_ranks,cards_on_table,7,indixs) > 0) {
-       for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
-           if ( (suit[player][i] == 'D') && (rank[player][i]) == '7') {
-               return i;
-           }
-       }
-   }
-
-
-    /* [FILL HERE] */
-
+    /////////////////////////////////////////////////////
+    if (max_coverage(table_ranks,cards_on_table,7,indexs) > 0) {
+        for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
+            if ( (suit[player][i] == 'D') && (rank[player][i]) == '7') {
+                return i;
+            }
+        }
+    }
+    //////////////////////////////////////////////////////////
 
     /* If possible, make a scopa.
      * If multiple cards in hand can make a scopa and one is a diamond, choose that one.
      * Otherwise, play the first card found that allows a scopa.
      */
+    int maxScope[CARDS_PER_PLAYER] = {-1};
+    int numScope = 0;
+    for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
+        if ( max_coverage(table_ranks,cards_on_table, get_value(rank[player][i]),indexs) == cards_on_table) {
+            maxScope[i] = i;
+            numScope++;
+            if (suit[player][i] == 'D') {
+                return i;
+            }
+        }
 
+    }
+    for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
+        if (maxScope[i] != -1) return maxScope[i];
+    }
     /* [FILL HERE] */
 
 
