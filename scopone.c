@@ -237,6 +237,7 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
     int maxScope[CARDS_PER_PLAYER] = {-1};
     int numScope = 0;
     for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
+       if (rank[player][i] == 0) continue;
         if ( max_coverage(table_ranks,cards_on_table, get_value(rank[player][i]),indexs) == cards_on_table) {
             maxScope[i] = i;
             numScope++;
@@ -253,9 +254,16 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
 
 
     /* If the player has a rank-7 card and there is a 7 on the table, play that card. */
+    int sevenTable = 0;
+    int sevenHand = 0;
+    for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
+        if (table_ranks[i] == '7') sevenTable = 1;
 
-    /* [FILL HERE] */
-
+    }
+    for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
+        if (rank[player][i] == '7') sevenHand = 1;
+        if (sevenHand && sevenTable) return i;
+    }
 
     /* Play the highest-ranked diamond that allows a capture, if one is available. */
 
