@@ -153,11 +153,12 @@ int main(void) {
     } // end loop
 
     // gives cards left on table at end of game to last player who made a capture
-    for (int i = 0; table_suits[i] != 0; ++i ) {
-        ranksWon[num_turns - 1][lastCapture][strlen(ranksWon[num_turns-1][lastCapture])] = table_ranks[i];
-        suitsWon[num_turns - 1][lastCapture][strlen(suitsWon[num_turns-1][lastCapture])] = table_suits[i];
+    if (lastCapture != -1) {
+        for (int i = 0; table_suits[i] != 0; ++i ) {
+            ranksWon[num_turns - 1][lastCapture][strlen(ranksWon[num_turns-1][lastCapture])] = table_ranks[i];
+            suitsWon[num_turns - 1][lastCapture][strlen(suitsWon[num_turns-1][lastCapture])] = table_suits[i];
+        }
     }
-
 
 
     /* If all 40 turns have been played and there are cards left on the table, assign them
