@@ -196,7 +196,47 @@ if (num_turns != 0) {
 
         /* [FILL HERE] */
     }
-    printf("tie: 0-0"); //FIXME
+    //determine winner
+    int team0points = 0;
+    int team1points = 0;
+
+    team0points += scopacount[0];
+    team1points += scopacount[1];
+
+    if (cardcount[0] > cardcount[1]) {
+        team0points++;
+    } else if (cardcount[1] > cardcount[0]) {
+        team1points++;
+    }
+
+    if (diamondcount[0] > diamondcount[1]) {
+        team0points++;
+    } else if (diamondcount[1] > diamondcount[0]) {
+        team1points++;
+    }
+
+    if (settebellocount[0] > settebellocount[1]) {
+        team0points++;
+    } else if (settebellocount[1] > settebellocount[0]) {
+        team1points++;
+    }
+
+    if (primeCount[0] > primeCount[1]) {
+        team0points++;
+    } else if (primeCount[1] > primeCount[0]) {
+        team1points++;
+    }
+
+
+
+    if (team0points == team1points) {
+        printf("tie: %d-%d",team0points,team1points);
+    }else if (team0points > team1points) {
+        printf("team 0 wins: %d-%d",team0points,team1points);
+    }else if (team1points > team0points) {
+        printf("team 1 wins: %d-%d",team0points,team1points);
+    }
+
 }/* The program always returns successfully. */
     return 0;
 }
