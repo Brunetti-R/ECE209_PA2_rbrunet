@@ -178,22 +178,19 @@ if (num_turns != 0) {
         //prints team values
         printf("team %d:: cards won: [",team);
 
-        for (player = 0; player < 4; ++player){
-            if ( (team + player) % 2) continue;
+        for (int t = 0; t < num_turns; ++t) {
+            for (int p = 0; p < PLAYERS; ++p) {
+                if ( (team + p) % 2) continue;
 
-            for (int t = 0; t < num_turns; ++t) {
-                for (int i = 0; i < strlen(suitsWon[t][player]); ++i) {
-                    printf(" %c%c",suitsWon[t][player][i],ranksWon[t][player][i]);
+                for (int i = 0; i < strlen(suitsWon[t][p]); ++i) {
+                    printf(" %c%c",suitsWon[t][p][i],ranksWon[t][p][i]);
                     cardcount[team]++;
-                    if (suitsWon[t][player][i] == 'D') {
+                    if (suitsWon[t][p][i] == 'D') {
                         diamondcount[team]++;
-                        if (ranksWon[t][player][i] == '7') settebellocount[team]++;
+                        if (ranksWon[t][p][i] == '7') settebellocount[team]++;
                     }
-
                 }
             }
-
-
         }
         printf(" ] scores = [cards=%d, diamonds=%d, settebello=%d, primiera=%d, scopa=%d]\n", cardcount[team], diamondcount[team],settebellocount[team],primeCount[team],scopacount[team]); //FIXME
 
