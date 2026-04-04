@@ -298,11 +298,16 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
     }
     if (maxCap != 0) return tempi;
     /* [FILL HERE] */
-    int maxRank = 0;
-    int Ihold = 0;
+    int maxRank = -1;
+    int Ihold = -1;
     for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
+        if (rank[player][i] == 0) continue;
         if (rankVal[player][i] > maxRank) {
             maxRank = rankVal[player][i];
+            Ihold = i;
+            continue;
+        }
+        if (rankVal[player][i] == maxRank && suit[player][Ihold] == 'D' && suit[player][i] != 'D') {
             Ihold = i;
         }
     }

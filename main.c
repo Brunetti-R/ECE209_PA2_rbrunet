@@ -102,7 +102,7 @@ int main(void) {
             table_ranks[i] = tempRank[i];
             table_suits[i] = tempSuit[i];
         }
-///////////////////////////// finish reloading table
+///////////////////////////// finish reloading table rank
 
 
         //place card on table if no capture
