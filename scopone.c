@@ -7,7 +7,7 @@
  */
 char suit[PLAYERS][CARDS_PER_PLAYER];
 char rank[PLAYERS][CARDS_PER_PLAYER];
-
+int indexs[DECK_SIZE];
 /**********************************************************/
 /*         HELPER FUNCTIONS                               */
 /**********************************************************/
@@ -55,6 +55,13 @@ char get_primiera_value(char rank) {
  * - indices: the indices of the selected cards (if not NULL)
  */
 int max_coverage(char table_ranks[], int cards_on_table, int value, int indices[]) {
+    ////////////////////////////empty indicies
+    if (indices != NULL) {
+        for (int i = 0; i < DECK_SIZE; ++i) {
+            indices[i] = -1;
+        }
+    }
+    ////////////////////////////empty indicies
 
     // Coverage table (used only if a single matching card is not available on the table)
     int max_cards[cards_on_table + 1][value + 1];
@@ -175,7 +182,6 @@ void deal_cards() {
  * - player: the player for this turn
  */
 int select_card(char table_suits[], char table_ranks[], int cards_on_table, int player) {
-    int indexs[DECK_SIZE] = {0};
     char rankVal[PLAYERS][CARDS_PER_PLAYER] = {0};     //temp var used to hold decoded value of ranks
     char primVal[CARDS_PER_PLAYER];                     //temp var to hold primera values of players hand
     int  cardPlay = -1;                                      //the index of the card the player must play

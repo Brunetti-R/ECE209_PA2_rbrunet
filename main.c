@@ -64,6 +64,26 @@ int main(void) {
 
         /* Select the card to be played */
         playCard = select_card(table_suits, table_ranks, cards_on_table, player);
+
+        capture = max_coverage(table_ranks, cards_on_table, get_value(rank[player][playCard]),indexs);
+        int k;
+        if (capture > 0) {
+            for (k = 0; suitsWon[turn][player][k] != '\0'; k++)
+                suitsWon[turn][player][k] = suit[player][playCard];
+                ranksWon[turn][player][k] = rank[player][playCard];
+                k++;
+                for  (int i = 0; i < capture; ++i) {
+                suitsWon[turn][player][k+i] = table_suits[indexs[i]];
+                ranksWon[turn][player][k+i] = table_ranks[indexs[i]];
+
+                table_suits[indexs[i]] = 0;
+                table_ranks[indexs[i]] = 0;
+            }
+        }
+
+
+
+
         if (capture == 0) {                                      //place card on table if no capture
             for (int i = 0; i < DECK_SIZE; ++i) {
                if (table_ranks[i] == 0) {
