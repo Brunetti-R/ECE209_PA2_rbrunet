@@ -232,9 +232,9 @@ if (num_turns != 0) {
     if (team0points == team1points) {
         printf("tie: %d-%d",team0points,team1points);
     }else if (team0points > team1points) {
-        printf("team 0 wins: %d-%d",team0points,team1points);
+        printf("team 0 won: %d-%d",team0points,team1points);
     }else if (team1points > team0points) {
-        printf("team 1 wins: %d-%d",team0points,team1points);
+        printf("team 1 won: %d-%d",team0points,team1points);
     }
 
 }/* The program always returns successfully. */
