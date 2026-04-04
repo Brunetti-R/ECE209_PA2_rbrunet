@@ -152,8 +152,8 @@ int main(void) {
         if (player > 3) player = 0;
     } // end loop
 
-    // gives cards left on table at end of game to last player who made a capture
-    if (lastCapture != -1) {
+    // Only after a full 40-turn game do remaining table cards go to the last capture.
+    if (num_turns == DECK_SIZE && lastCapture != -1) {
         for (int i = 0; table_suits[i] != 0; ++i ) {
             ranksWon[num_turns - 1][lastCapture][strlen(ranksWon[num_turns-1][lastCapture])] = table_ranks[i];
             suitsWon[num_turns - 1][lastCapture][strlen(suitsWon[num_turns-1][lastCapture])] = table_suits[i];
