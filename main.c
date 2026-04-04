@@ -10,6 +10,7 @@
 extern char suit[PLAYERS][CARDS_PER_PLAYER];
 extern char rank[PLAYERS][CARDS_PER_PLAYER];
 extern int indexs[DECK_SIZE];
+int scopacount[2];
 /* Print the cards held by each player. */
 void print_card_distribution() {
     for (int i = 0; i < PLAYERS; i++) {
@@ -58,7 +59,7 @@ int main(void) {
 
     /* Print out the card distribution among players */
     print_card_distribution();
-
+    int lastCapture = -1;
     /* Game play for the specified number of turns (num_turns). */
     for (int turn = 0; turn < num_turns; turn++) {
 
@@ -69,6 +70,8 @@ int main(void) {
         capture = max_coverage(table_ranks, cards_on_table, get_value(rank[player][playCard]),indexs);
         int k;
         if (capture > 0) {
+
+            lastCapture = player;
             for (k = 0; suitsWon[turn][player][k] != '\0'; k++) {
             }
                 suitsWon[turn][player][k] = suit[player][playCard];
@@ -94,6 +97,9 @@ int main(void) {
                 count++;
             }
         }
+        if ((count == 0) && (capture > 0)) {
+            scopacount[ (player % 2) ]++;
+        }
         for (int i = 0; i < DECK_SIZE; ++i) {
             table_ranks[i] = 0;
             table_suits[i] = 0;
@@ -102,6 +108,8 @@ int main(void) {
             table_ranks[i] = tempRank[i];
             table_suits[i] = tempSuit[i];
         }
+
+
 ///////////////////////////// finish reloading table rank
 
 
@@ -144,28 +152,48 @@ int main(void) {
         if (player > 3) player = 0;
     } // end loop
 
+    // gives cards left on table at end of game to last player who made a capture
+    for (int i = 0; table_suits[i] != 0; ++i ) {
+        ranksWon[num_turns - 1][lastCapture][strlen(ranksWon[num_turns-1][lastCapture])] = table_ranks[i];
+        suitsWon[num_turns - 1][lastCapture][strlen(suitsWon[num_turns-1][lastCapture])] = table_suits[i];
+    }
+
+
+
     /* If all 40 turns have been played and there are cards left on the table, assign them
     * to the last team that made a capture.
     */
 
     /* [FILL HERE] */
+    int cardcount[2] = {0};
+    int diamondcount[2] = {0};
+    int settebellocount[2] = {0};
+    int primeCount[2] = {0};
 if (num_turns != 0) {
     /* Compute the scores and print them, along with the winner (see format in project specifications). */
 
-    for (int team = 0; team < 2; ++team) {              //prints team values
+    for (int team = 0; team < 2; ++team) {
+        //prints team values
         printf("team %d:: cards won: [",team);
+
         for (player = 0; player < 4; ++player){
             if ( (team + player) % 2) continue;
 
             for (int t = 0; t < num_turns; ++t) {
                 for (int i = 0; i < strlen(suitsWon[t][player]); ++i) {
                     printf(" %c%c",suitsWon[t][player][i],ranksWon[t][player][i]);
+                    cardcount[team]++;
+                    if (suitsWon[t][player][i] == 'D') {
+                        diamondcount[team]++;
+                        if (ranksWon[t][player][i] == '7') settebellocount[team]++;
+                    }
+
                 }
             }
 
 
         }
-        printf(" ] scores = [cards=0, diamonds=0, settebello=0, primiera=0, scopa=0]\n"); //FIXME
+        printf(" ] scores = [cards=%d, diamonds=%d, settebello=%d, primiera=%d, scopa=%d]\n", cardcount[team], diamondcount[team],settebellocount[team],primeCount[team],scopacount[team]); //FIXME
 
         /* [FILL HERE] */
     }

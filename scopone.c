@@ -257,7 +257,9 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
 
     }
     for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
-        if (maxScope[i] != -1) return maxScope[i];
+        if (maxScope[i] != -1) {
+            return maxScope[i];
+        }
     }
     /* [FILL HERE] */
 
