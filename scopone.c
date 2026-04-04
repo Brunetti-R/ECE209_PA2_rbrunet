@@ -42,6 +42,45 @@ char get_primiera_value(char rank) {
         return 16;
     return (rank - '0' + 10);
 }
+/////////////////////////////////////////////////////
+/* Computes team primera points */
+void compute_primiera(int num_turns,
+                      char suitsWon[][PLAYERS][DECK_SIZE],
+                      char ranksWon[][PLAYERS][DECK_SIZE],
+                      int primeCount[TEAMS]) {
+    int maxPrimiera[TEAMS][4] = {0};
+
+    for (int team = 0; team < TEAMS; ++team) {
+        for (int player = 0; player < PLAYERS; ++player) {
+            if ((team + player) % 2) continue;
+
+            for (int t = 0; t < num_turns; ++t) {
+                for (int i = 0; suitsWon[t][player][i] != '\0'; ++i) {
+                    int primieraValue = get_primiera_value(ranksWon[t][player][i]);
+
+                    if (suitsWon[t][player][i] == 'D' && primieraValue > maxPrimiera[team][0]) {
+                        maxPrimiera[team][0] = primieraValue;
+                    }
+                    else if (suitsWon[t][player][i] == 'H' && primieraValue > maxPrimiera[team][1]) {
+                        maxPrimiera[team][1] = primieraValue;
+                    }
+                    else if (suitsWon[t][player][i] == 'S' && primieraValue > maxPrimiera[team][2]) {
+                        maxPrimiera[team][2] = primieraValue;
+                    }
+                    else if (suitsWon[t][player][i] == 'C' && primieraValue > maxPrimiera[team][3]) {
+                        maxPrimiera[team][3] = primieraValue;
+                    }
+                }
+            }
+        }
+
+        primeCount[team] = 0;
+        for (int i = 0; i < 4; ++i) {
+            primeCount[team] += maxPrimiera[team][i];
+        }
+    }
+}
+/////////////////////////////////////////////////////
 
 /**********************************************************/
 /*         CORE FUNCTIONS ALREADY PROVIDED                */

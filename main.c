@@ -171,6 +171,7 @@ int main(void) {
     int primeCount[2] = {0};
 if (num_turns != 0) {
     /* Compute the scores and print them, along with the winner (see format in project specifications). */
+    compute_primiera(num_turns, suitsWon, ranksWon, primeCount);
 
     for (int team = 0; team < 2; ++team) {
         //prints team values

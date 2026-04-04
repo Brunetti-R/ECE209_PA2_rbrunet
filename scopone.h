@@ -22,6 +22,12 @@ char get_value(char rank);
 /* Translate card's rank into numeric value for primiera */
 char get_primiera_value(char rank);
 
+/* Computes which team wins the primiera point. */
+void compute_primiera(int num_turns,
+                      char suitsWon[][PLAYERS][DECK_SIZE],
+                      char ranksWon[][PLAYERS][DECK_SIZE],
+                      int primeCount[TEAMS]);
+
 /* Returns the maximum number of cards that sum to 'value' and, if 'indices' is not NULL, fills it with the selected card indices.
  * If there is a single card that matches the value, returns that card.
  * - table_ranks: the ranks of the cards on the table
