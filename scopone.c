@@ -234,7 +234,10 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
      * If multiple cards in hand can make a scopa and one is a diamond, choose that one.
      * Otherwise, play the first card found that allows a scopa.
      */
-    int maxScope[CARDS_PER_PLAYER] = {-1};
+    int maxScope[CARDS_PER_PLAYER];
+    for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
+        maxScope[i] = -1;
+    }
     int numScope = 0;
     for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
        if (rank[player][i] == 0) continue;
@@ -266,22 +269,43 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
     }
 
     /* Play the highest-ranked diamond that allows a capture, if one is available. */
-
+    for (int i = CARDS_PER_PLAYER-1; i >= 0; --i) {
+        if (suit[player][i] == 'D') {
+            if (max_coverage(table_ranks, cards_on_table, rankVal[player][i],indexs) > 0) return i;
+        }
+    }
     /* [FILL HERE] */
 
 
     /* Play the card that allows the maximum-coverage capture (i.e., captures the largest number of cards).
      * If multiple cards qualify, play the first one found.
      */
-
+    int maxCap = 0;
+    int temp = 0;
+    int tempi;
+    for (int i = 0; i < CARDS_PER_PLAYER; ++i ) {
+        if (rank[player][i] == 0) continue;
+        if ( (temp = max_coverage(table_ranks, cards_on_table,rankVal[player][i],indexs)) > maxCap) {
+            maxCap = temp;
+            tempi = i;
+        }
+    }
+    if (maxCap != 0) return tempi;
     /* [FILL HERE] */
-
-
+    int maxRank = 0;
+    int Ihold = 0;
+    for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
+        if (rankVal[player][i] > maxRank) {
+            maxRank = rankVal[player][i];
+            Ihold = i;
+        }
+    }
+    return Ihold;
     /* A capture is not possible: play the card with the maximum rank.
        If there are multiple cards with this rank, select the first one found that is not a diamond. */
 
     /* [FILL HERE] */
-    //remove played card from hand
+    //error message
     if (cardPlay == -1) {
         printf("error selecting card!!\n");
         cardPlay = 0;
