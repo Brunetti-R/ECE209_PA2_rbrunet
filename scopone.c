@@ -306,7 +306,7 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
     /* If the player has a rank-7 card and there is a 7 on the table, play that card. */
     int sevenTable = 0;
     int sevenHand = 0;
-    for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
+    for (int i = 0; i < cards_on_table; ++i) {
         if (table_ranks[i] == '7') sevenTable = 1;
 
     }
