@@ -68,7 +68,8 @@ int main(void) {
         capture = max_coverage(table_ranks, cards_on_table, get_value(rank[player][playCard]),indexs);
         int k;
         if (capture > 0) {
-            for (k = 0; suitsWon[turn][player][k] != '\0'; k++)
+            for (k = 0; suitsWon[turn][player][k] != '\0'; k++) {
+            }
                 suitsWon[turn][player][k] = suit[player][playCard];
                 ranksWon[turn][player][k] = rank[player][playCard];
                 k++;
