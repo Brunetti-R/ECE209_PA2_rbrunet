@@ -275,11 +275,17 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
     }
 
     /* Play the highest-ranked diamond that allows a capture, if one is available. */
-    for (int i = CARDS_PER_PLAYER-1; i >= 0; --i) {
-        if (suit[player][i] == 'D') {
-            if (max_coverage(table_ranks, cards_on_table, rankVal[player][i],indexs) > 0) return i;
+    int maxDiamond = -1;
+    int maxDiamondRank = -1;
+    for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
+        if (suit[player][i] != 'D') continue;
+        if (max_coverage(table_ranks, cards_on_table, rankVal[player][i], indexs) == 0) continue;
+        if (rankVal[player][i] > maxDiamondRank) {
+            maxDiamondRank = rankVal[player][i];
+            maxDiamond = i;
         }
     }
+    if (maxDiamond != -1) return maxDiamond;
     /* [FILL HERE] */
 
 
