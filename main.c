@@ -95,7 +95,8 @@ int main(void) {
             printf(" %c%c",table_suits[i],table_ranks[i]);
         }
         printf(" ]\n");
-
+        suit[player][playCard] = 0;
+        rank[player][playCard] = 0;
         /* [FILL HERE] */
         ++player;
         if (player > 3) player = 0;
@@ -109,7 +110,7 @@ int main(void) {
 if (num_turns != 0) {
     /* Compute the scores and print them, along with the winner (see format in project specifications). */
 
-    for (int team = 0; team < 2; ++team) {
+    for (int team = 0; team < 2; ++team) {              //prints team values
         printf("team %d:: cards won: [",team);
         for (player = 0; player < 4; ++player){
             if ( (team + player) % 2) continue;

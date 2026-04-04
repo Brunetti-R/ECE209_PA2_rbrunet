@@ -7,7 +7,7 @@
  */
 char suit[PLAYERS][CARDS_PER_PLAYER];
 char rank[PLAYERS][CARDS_PER_PLAYER];
-
+extern int indixs[DECK_SIZE] = {0};
 /**********************************************************/
 /*         HELPER FUNCTIONS                               */
 /**********************************************************/
@@ -177,7 +177,7 @@ void deal_cards() {
 int select_card(char table_suits[], char table_ranks[], int cards_on_table, int player) {
     char rankVal[PLAYERS][CARDS_PER_PLAYER] = {0};     //temp var used to hold decoded value of ranks
     char primVal[CARDS_PER_PLAYER];                     //temp var to hold primera values of players hand
-    int  cardPlay;                                      //the index of the card the player must play
+    int  cardPlay = -1;                                      //the index of the card the player must play
     for (int i = 0; i < 10; ++i) {
         rankVal[player][i] = get_value(rank[player][i]);
         primVal[i] = get_primiera_value(rank[player][i]);
@@ -186,22 +186,48 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
     /* If there are no cards on the table, play the card with the minimum value (in terms of primiera).
       * If there are multiple cards with this value, select the first one found that is not a diamond.
       */
-   ///////////////////////////////////////////////////////////////////////////////////
-    if (cards_on_table == 0) {
-        cardPlay = prMinSearch(player,primVal);
+   // count cards in hand
+    int cardsinhand = 0;
+    for (int i = 0; i < CARDS_PER_PLAYER; i++) {
+        if (suit[player][i] != 0) cardsinhand++;
     }
-    else return -1;
+
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    if (cards_on_table == 0) {
+        return prMinSearch(player,primVal);
+    }
+
     /////////////////////////////////////////////////////////////////////////////////
 
     /* [FILL HERE] */
 
 
     /* If the player has only one card in hand, play it. */
+///////////////////////////////////////////////////////////////////////////////////
+    if (cardsinhand == 1) {
+        for (int i = 0; i < CARDS_PER_PLAYER; i++) {
+            if (suit[player][i] != 0) {
+                return i;
 
-    /* [FILL HERE] */
+            }
+        }
+    }
+///////////////////////////////////////////////////////////////////////////////////
 
 
     /* If the player has the settebello in hand and can make a capture, play it. */
+
+    if (max_coverage(table_ranks,cards_on_table,7,indixs) > 0) {
+       for (int i = 0; i < CARDS_PER_PLAYER; ++i) {
+           if ( (suit[player][i] == 'D') && (rank[player][i]) == '7') {
+               return i;
+           }
+       }
+   }
+
 
     /* [FILL HERE] */
 
@@ -235,7 +261,10 @@ int select_card(char table_suits[], char table_ranks[], int cards_on_table, int 
        If there are multiple cards with this rank, select the first one found that is not a diamond. */
 
     /* [FILL HERE] */
-
-   
+    //remove played card from hand
+    if (cardPlay == -1) {
+        printf("error selecting card!!\n");
+        cardPlay = 0;
+    }
     return cardPlay; // change the return value
 }
